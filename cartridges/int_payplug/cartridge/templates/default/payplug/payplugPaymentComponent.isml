@@ -1,0 +1,2 @@
+
+<div class="payplugComponent" data-pp-component-url="${URLUtils.https('PayPlug-PaymentComponent')}"></div>

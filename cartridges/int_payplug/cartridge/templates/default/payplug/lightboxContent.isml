@@ -1,0 +1,74 @@
+
+
+<isif condition="${customer.isAuthenticated() && pdict.isOneClickEnabled && pdict.isCreditCard}">
+    <div class="payplugSavedCard">
+        <isloop items="${customer.getProfile().getWallet().getPaymentInstruments()}" var="wallet">
+            <fieldset class="payment-form-fields">
+                <input type="radio"
+                    name="dwfrm_billing_payplugCreditCard"
+                    value="${wallet.getCreditCardToken()}" />
+                <p>${Resource.msg('label.payment.credit', 'account', null)} ${wallet.creditCardType}</p>
+                <p>${wallet.maskedCreditCardNumber}</p>
+                <p>${Resource.msg('label.payment.ending', 'account', null)} ${wallet.creditCardExpirationMonth}/${wallet.creditCardExpirationYear}</p>
+            </fieldset>
+        </isloop>
+        <fieldset class="payment-form-fields">
+            <input type="radio"
+                name="dwfrm_billing_payplugCreditCard"
+                value="" checked />
+            <p>
+                <isif condition="${pdict.PPIntegrationMode === 'lightbox'}">
+                    ${Resource.msg('other.credit.card', 'payplug', null)}
+                <iselse/>
+                    <div class="payplugIntegrated" data-pp-is-live="${pdict.isProduction}">
+                        <form id="my-payment-form">
+                            <div id="scheme"></div>
+                            <div id="cardholder-input-container"></div>
+                            <div id="pan-input-container"></div>
+                            <div id="exp-input-container"></div>
+                            <div id="cvv-input-container"></div>
+                            <div id="save-input-container">
+                                <input type="checkbox" name="pp-integrated-savecard" />
+                                <p>${Resource.msg('payplug.savecard', 'payplug', null)}</p>
+                            </div>
+                            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
+                                data-pp-paymentid="${pdict.paymentOptionID}"
+                                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
+                                class="payplugIntegratedPayment">Payer</button>
+                        </form>
+                    </div>
+                </isif>
+            </p>
+        </fieldset>
+    </div>
+<iselseif condition="${pdict.isCreditCard && pdict.PPIntegrationMode === 'integrated'}" />
+    <div class="payplugIntegrated">
+        <form id="my-payment-form">
+            <div id="scheme"></div>
+            <div id="cardholder-input-container"></div>
+            <div id="pan-input-container"></div>
+            <div id="exp-input-container"></div>
+            <div id="cvv-input-container"></div>
+            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
+                data-pp-paymentid="${pdict.paymentOptionID}"
+                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
+                class="payplugIntegratedPayment">Payer</button>
+        </form>
+    </div>
+</isif>
+
+<div class="payplugLightboxForm">
+    <isif condition="${pdict.isApplePay}">
+        <apple-pay-button class="onApplePayButtonClicked payplugLightbox"
+            data-pp-applepay="${URLUtils.https('PayPlugApplePay-ApplePayRequest').toString()}"
+            data-pp-validate="${URLUtils.https('PayPlugApplePay-ValidateMerchant').toString()}"
+            data-pp-update="${URLUtils.https('PayPlugApplePay-UpdatePayment').toString()}"
+            data-pp-applevalidationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
+            buttonstyle="black" type="plain" locale="fr-FR"></apple-pay-button>
+    <iselse/>
+        <button data-pp-lightbox-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
+            data-pp-paymentid="${pdict.paymentOptionID}"
+            data-pp-lightbox-lib="${pdict.PP_libraryUrl}"
+            class="btn btn-default payplugLightbox">Buy now - ${pdict.paymentOptionID}</button>
+    </isif>
+</div>

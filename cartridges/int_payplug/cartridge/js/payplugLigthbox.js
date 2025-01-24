@@ -21,6 +21,9 @@ function loadAndEncapsulateScript(url) {
 
 document.addEventListener('DOMContentLoaded', function () {
 	$('#dwfrm_billing').on('submit', function (e) {
+		if ($('.payplugRedirect').is(':visible')) {
+			return;
+		}
 		e.preventDefault();
 		$('form[id$="billing"]').validate();
 		$.ajax({
@@ -46,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 	handleLightboxClic();
 
-	// NOT ONLY FOR INTEGRATED
 	$('[data-pp="true"]').on('click', function () {
 		$.ajax({
 			url: $('.payplugComponent').data('pp-component-url'),

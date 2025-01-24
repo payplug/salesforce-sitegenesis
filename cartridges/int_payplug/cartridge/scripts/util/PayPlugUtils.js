@@ -117,4 +117,16 @@ PayPlugUtils.createNotificationCustomObject = function createNotificationCustomO
 	});
 }
 
+PayPlugUtils.hasPayPlugPaymentInstrument = function hasPayPlugPaymentInstrument(cart) {
+	const pis = cart.getPaymentInstruments().iterator();
+	while (pis.hasNext()) {
+		let pi = pis.next();
+		let pm = PaymentMgr.getPaymentMethod(pi.getPaymentMethod());
+		if (pm && pm.getPaymentProcessor().getID() === 'PAYPLUG') {
+			return pm;
+		}
+	}
+	return false;
+}
+
 module.exports = PayPlugUtils;

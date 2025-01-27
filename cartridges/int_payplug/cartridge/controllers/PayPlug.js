@@ -1,8 +1,9 @@
 'use strict';
 
 /* API Modules */
-var Site = require('dw/system/Site');
-var PaymentMgr = require('dw/order/PaymentMgr');
+const Site = require('dw/system/Site');
+const URLUtils = require('dw/web/URLUtils');
+const PaymentMgr = require('dw/order/PaymentMgr');
 
 /* Script Modules */
 var app = require('*/cartridge/scripts/app');
@@ -49,11 +50,23 @@ function notification() {
 }
 
 function paymentComponent() {
-	if (Site.getCurrent().getCustomPreferenceValue('PP_integrationMode').getValue() === 'HPP') {
+	const paymentMethod = PaymentMgr.getPaymentMethod(request.getHttpParameterMap().get('paymentMethodID').getStringValue());
+	const ppPaymentMethod = paymentMethod.getCustom()['PP_paymentMethod'].getValue() || 'credit_card';
+	const integrationMode = ppPaymentMethod.indexOf('oney') !== -1 ? 'HPP' : Site.getCurrent().getCustomPreferenceValue('PP_integrationMode').getValue();
+
+	if (integrationMode === 'HPP') {
 		app.getView().render('payplug/redirectContent');
 	} else {
 		app.getView('PayPlugLightbox').render('payplug/lightboxContent');
 	}
+}
+
+function oneySimulation() {
+	app.getView('PayPlugOneySimulation').render('payplug/oneysimulation');
+}
+
+function cancelURL() {
+	response.redirect(URLUtils.url('Cart-Show', 'PayPlugError', true));
 }
 
 exports.GetForm = guard.ensure(['get'], getForm);
@@ -61,3 +74,5 @@ exports.PlaceOrderLightbox = guard.ensure(['get'], placeOrderLightbox);
 exports.ReturnURL = guard.ensure(['get'], returnURL);
 exports.Notification = guard.ensure(['post'], notification);
 exports.PaymentComponent = guard.ensure(['get'], paymentComponent);
+exports.OneySimulation = guard.ensure(['get'], oneySimulation);
+exports.CancelURL = guard.ensure(['get'], cancelURL);

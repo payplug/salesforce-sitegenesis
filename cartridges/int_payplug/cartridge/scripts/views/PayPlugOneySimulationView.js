@@ -36,7 +36,13 @@ var PayPlugOneySimulationView = View.extend({
 		} else if (!httpParameter.isParameterSubmitted('productPrice') && !oneyDisplay.some(item => item.value === 'Summary')) {
 			return
 		}
-		const oneyAmount = httpParameter.isParameterSubmitted('productPrice') ? httpParameter.get('productPrice').getValue() : cartTotal.value;
+		const oneyAmount = httpParameter.isParameterSubmitted('productPrice')
+			? httpParameter.get('productPrice').getValue()
+			: cartTotal?.value || 0;
+		const amount = parseFloat(oneyAmount * 100);
+		if (amount < 10000) {
+			return;
+		}
 		const PayPlug = new PayPlugPaymentModel();
 		const oneySimulation = PayPlug.oneySimulation(parseFloat(oneyAmount * 100));
 		this.oneySimulationAmount = new Money(oneyAmount, session.getCurrency().getCurrencyCode());

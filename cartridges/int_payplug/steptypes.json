@@ -1,0 +1,62 @@
+{
+	"step-types": {
+		"chunk-script-module-step": [
+			{
+				"@type-id": "custom.PayPlugPaymentNotification",
+				"@supports-parallel-execution": "false",
+				"@supports-site-context": "true",
+				"@supports-organization-context": "false",
+				"description": "Handle PayPlug Notification",
+				"module": "int_payplug/cartridge/scripts/jobs/notification.js",
+				"before-step-function": "beforeStep",
+				"total-count-function": "getTotalCount",
+				"read-function": "read",
+				"process-function": "process",
+				"write-function": "write",
+				"after-step-function": "afterStep",
+				"chunk-size": 50,
+				"transactional": "false",
+				"status-codes": {
+                    "status": [
+                        {
+                            "@code": "ERROR",
+                            "description": "The PayPlug job step has failed."
+                        },
+                        {
+                            "@code": "OK",
+                            "description": "The PayPlug job step finished successfully."
+                        }
+                    ]
+				}
+			},
+			{
+				"@type-id": "custom.PayPlugPaymentCapture",
+				"@supports-parallel-execution": "false",
+				"@supports-site-context": "true",
+				"@supports-organization-context": "false",
+				"description": "Handle PayPlug Capture",
+				"module": "int_payplug/cartridge/scripts/jobs/capture.js",
+				"before-step-function": "beforeStep",
+				"total-count-function": "getTotalCount",
+				"read-function": "read",
+				"process-function": "process",
+				"write-function": "write",
+				"after-step-function": "afterStep",
+				"chunk-size": 50,
+				"transactional": "false",
+				"status-codes": {
+                    "status": [
+                        {
+                            "@code": "ERROR",
+                            "description": "The PayPlug job step has failed."
+                        },
+                        {
+                            "@code": "OK",
+                            "description": "The PayPlug job step finished successfully."
+                        }
+                    ]
+                }
+			}
+		]
+	}
+}

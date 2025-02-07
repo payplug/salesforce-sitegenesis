@@ -2,7 +2,7 @@
 
 <isif condition="${customer.isAuthenticated() && pdict.isOneClickEnabled && pdict.isCreditCard}">
     <div class="payplugSavedCard">
-        <isloop items="${customer.getProfile().getWallet().getPaymentInstruments()}" var="wallet">
+        <isloop items="${customer.getProfile().getWallet().getPaymentInstruments('PAYPLUG_ONECLICK')}" var="wallet">
             <fieldset class="payment-form-fields">
                 <input type="radio"
                     name="dwfrm_billing_payplugCreditCard"

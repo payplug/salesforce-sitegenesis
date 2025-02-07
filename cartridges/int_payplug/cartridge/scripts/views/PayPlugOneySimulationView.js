@@ -38,7 +38,8 @@ var PayPlugOneySimulationView = View.extend({
 		}
 		const oneyAmount = httpParameter.isParameterSubmitted('productPrice')
 			? httpParameter.get('productPrice').getValue()
-			: cartTotal?.value || 0;
+			: (cartTotal && cartTotal.value) ? cartTotal.value : 0;
+
 		const amount = parseFloat(oneyAmount * 100);
 		if (amount < 10000) {
 			return;

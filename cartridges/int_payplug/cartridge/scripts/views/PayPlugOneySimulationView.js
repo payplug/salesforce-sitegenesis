@@ -17,6 +17,7 @@ var PayPlugOneySimulationView = View.extend({
 		this._super(params);
 		this.oneySimulation = [];
 		this.isOneyAvailable = PaymentMethodHelper.isOneyAvailable();
+		this.oneySimulationDisplay = false;
 
 		this.initializeView();
 
@@ -35,9 +36,10 @@ var PayPlugOneySimulationView = View.extend({
 		// Vérification : si productPrice est soumis et que oneyDisplay n'est pas égal à "product", retour anticipé
 		if (httpParameter.isParameterSubmitted('productPrice') && !oneyDisplay.some(item => item.value === 'PDP')) {
 			return;
-		} else if (!httpParameter.isParameterSubmitted('productPrice') && !oneyDisplay.some(item => item.value === 'Summary')) {
+		} else if (httpParameter.isParameterSubmitted('pageContext') && !oneyDisplay.some(item => item.value === httpParameter.get('pageContext').getStringValue())) {
 			return
 		}
+		this.oneySimulationDisplay = true;
 		const oneyAmount = httpParameter.isParameterSubmitted('productPrice')
 			? httpParameter.get('productPrice').getValue()
 			: (cartTotal && cartTotal.value) ? cartTotal.value : 0;

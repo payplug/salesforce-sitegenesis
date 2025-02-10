@@ -3,14 +3,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	oneyCloseSimulation();
 	oneyChangePayment();
 
-	$('body').on('product:afterAttributeSelect', function (e) {
-		updateSimulation();
-	});
-
+	$('#pdpMain').on('change', '.pdpForm input[name="Quantity"]', updateSimulation);
 });
 
 function updateSimulation() {
-	const $price = $('.sales span').attr('content') * $('.quantity-select').val();
+	const priceElement = document.querySelector("#product-content .price-sales");
+    if (!priceElement || !$('.oney-simulation').is(':visible')) return null;
+
+    const priceText = priceElement.textContent.trim();
+    const priceNumber = parseFloat(priceText.replace(/[^\d,.-]/g, '').replace(',', '.'));
+
+	const $price = priceNumber * $(this).val();
 	var url = $('.oney-simulation').data('simulation-update') + '?price=' + $price;
 	$.ajax({
 		url: url,

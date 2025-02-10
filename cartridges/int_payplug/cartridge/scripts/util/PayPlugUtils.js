@@ -129,6 +129,16 @@ PayPlugUtils.hasPayPlugPaymentInstrument = function hasPayPlugPaymentInstrument(
 	return false;
 }
 
+PayPlugUtils.checkPayPlugPayment = function checkPayPlugPayment() {
+	const PayPlugPaymentModel = require('~/cartridge/models/PayPlugPaymentModel');
+	let paymentID = session.getCustom()['payplugPaymentID'];
+	delete session.getCustom()['payplugPaymentID'];
+
+	const PayPlugPayment = new PayPlugPaymentModel();
+	const PaymentResponse = PayPlugPayment.retrievePayment(paymentID);
+	return (empty(PaymentResponse.getFailure()));
+}
+
 PayPlugUtils.getApplePayMethod = function getApplePayMethod() {
     const paymentMethods = PaymentMgr.getActivePaymentMethods(); // Récupère toutes les méthodes de paiement
     const iterator = paymentMethods.iterator(); // Crée un itérateur

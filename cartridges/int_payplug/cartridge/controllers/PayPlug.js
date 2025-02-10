@@ -20,6 +20,8 @@ function getForm() {
 	const PayPlugPayment = new PayPlugPaymentModel();
 	const PaymentResponse = PayPlugPayment.createPayment(paymentMethod, app.getForm('billing').object.payplugCreditCard.value);
 
+	session.getCustom()['payplugPaymentID'] = PaymentResponse.getPaymentID();
+
 	r.renderJSON({
 		payplug_url: PaymentResponse.getPaymentURL(),
 		payplug_id: PaymentResponse.getPaymentID()
@@ -27,6 +29,10 @@ function getForm() {
 }
 
 function placeOrderLightbox() {
+	if (!PayPlugUtils.checkPayPlugPayment()) {
+		response.redirect(URLUtils.url('Cart-Show', 'PayPlugError', true));
+		return;
+	}
 	var placeOrderResult = app.getController('COPlaceOrder').Start();
 	if (placeOrderResult.error) {
 		app.getController('COSummary').Start({
@@ -38,6 +44,10 @@ function placeOrderLightbox() {
 }
 
 function returnURL() {
+	if (!PayPlugUtils.checkPayPlugPayment()) {
+		response.redirect(URLUtils.url('Cart-Show', 'PayPlugError', true));
+		return;
+	}
 	var placeOrderResult = app.getController('COPlaceOrder').Start();
 	if (placeOrderResult.error) {
 		app.getController('COSummary').Start({

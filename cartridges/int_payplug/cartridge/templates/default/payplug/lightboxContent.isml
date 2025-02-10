@@ -1,4 +1,4 @@
-
+<isinclude template="util/modules"/>
 
 <isif condition="${customer.isAuthenticated() && pdict.isOneClickEnabled && pdict.isCreditCard}">
     <div class="payplugSavedCard">
@@ -7,9 +7,7 @@
                 <input type="radio"
                     name="dwfrm_billing_payplugCreditCard"
                     value="${wallet.getCreditCardToken()}" />
-                <p>${Resource.msg('label.payment.credit', 'account', null)} ${wallet.creditCardType}</p>
-                <p>${wallet.maskedCreditCardNumber}</p>
-                <p>${Resource.msg('label.payment.ending', 'account', null)} ${wallet.creditCardExpirationMonth}/${wallet.creditCardExpirationYear}</p>
+                <isminicreditcard card="${wallet}" show_expiration="${true}"/>
             </fieldset>
         </isloop>
         <fieldset class="payment-form-fields">

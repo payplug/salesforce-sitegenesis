@@ -13,14 +13,15 @@ const LocaleHelper = require('~/cartridge/scripts/helpers/LocaleHelper');
 const PayPlugPaymentModel = require('~/cartridge/models/PayPlugPaymentModel');
 
 function ApplePayRequest() {
-	const bytes = new dw.util.Bytes(JSON.stringify({ 'apple_pay_domain': Site.getCurrent().getCustomPreferenceValue('PP_ApplePayDomain') }), 'UTF-8');
+	const domain = Site.getCurrent().getCustomPreferenceValue('PP_ApplePayDomain');
+	const bytes = new dw.util.Bytes(JSON.stringify({ 'apple_pay_domain': domain }), 'UTF-8');
 	const cart = BasketMgr.getCurrentBasket();
 	const payload = {
 		countryCode: LocaleHelper.getCountryCode(),
 		currencyCode: 'EUR',
 		supportedNetworks: ['visa', 'masterCard'],
 		merchantCapabilities: ['supports3DS'],
-		total: { label: 'Demo PayPlug', amount: cart.getTotalGrossPrice().getValue().toString() },
+		total: { label: domain, amount: cart.getTotalGrossPrice().getValue().toString() },
 		applicationData: Encoding.toBase64(bytes)
 	};
 
@@ -31,6 +32,8 @@ function ValidateMerchant() {
 	const paymentMethod = PayPlugUtils.getApplePayMethod();
 	const PayPlugPayment = new PayPlugPaymentModel();
 	const PaymentResponse = PayPlugPayment.createPayment(paymentMethod, null);
+
+	session.getCustom()['payplugPaymentID'] = PaymentResponse.getPaymentID();
 
 	r.renderJSON({
 		merchant_session: PaymentResponse ? PaymentResponse.response.payment_method.merchant_session : null,

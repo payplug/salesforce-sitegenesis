@@ -19,6 +19,7 @@ function submit() {
 	if (hasPayPlugPaymentInstrument) {
 		const PayPlugPayment = new PayPlugPaymentModel();
 		const PaymentResponse = PayPlugPayment.createPayment(hasPayPlugPaymentInstrument, app.getForm('billing').object.payplugCreditCard.value);
+		session.getCustom()['payplugPaymentID'] = PaymentResponse.getPaymentID();
 		response.redirect(PaymentResponse.getPaymentURL());
 		return;
 	}

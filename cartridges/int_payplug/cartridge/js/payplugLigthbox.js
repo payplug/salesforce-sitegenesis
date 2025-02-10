@@ -20,6 +20,9 @@ function loadAndEncapsulateScript(url) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+	if (!window.ApplePaySession || !ApplePaySession.canMakePayments()) {
+		$('div[data-pp-apple="true"]').hide();
+	}
 	$('#dwfrm_billing').on('submit', function (e) {
 		if ($('.payplugRedirect').is(':visible')) {
 			return;
@@ -61,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				$('.payplugComponent').html(data);
 				handleLightboxClic();
 				require('./payplugIntegrated').init();
+				require('./payplugApplePay').init();
 			}
 		})
 	});
@@ -79,7 +83,6 @@ function handleLightboxClic() {
 				success: async function (data) {
 					try {
 						var payplug_url = JSON.parse(data).payplug_url;
-						console.log(el.getAttribute('data-pp-lightbox-lib'))
 
 						await loadAndEncapsulateScript(el.getAttribute('data-pp-lightbox-lib'));
 						if (typeof Payplug !== 'undefined' && Payplug.showPayment) {

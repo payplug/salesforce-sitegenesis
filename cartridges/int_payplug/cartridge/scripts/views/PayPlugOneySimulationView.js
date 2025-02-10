@@ -8,6 +8,7 @@ const BasketMgr = require('dw/order/BasketMgr');
 /** Script Modules */
 const app = require('*/cartridge/scripts/app');
 const PayPlugPaymentModel = require('~/cartridge/models/PayPlugPaymentModel');
+const PaymentMethodHelper = require('~/cartridge/scripts/helpers/OneyPaymentMethodHelper');
 
 const View = require('*/cartridge/scripts/views/View');
 
@@ -15,6 +16,7 @@ var PayPlugOneySimulationView = View.extend({
 	init: function (params) {
 		this._super(params);
 		this.oneySimulation = [];
+		this.isOneyAvailable = PaymentMethodHelper.isOneyAvailable();
 
 		this.initializeView();
 

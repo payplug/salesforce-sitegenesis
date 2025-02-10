@@ -31,7 +31,7 @@ var PayPlugLightboxView = View.extend({
 		this.isProduction = System.getInstanceType() == System.PRODUCTION_SYSTEM;
 		this.isCreditCard = empty(this.PPpaymentMethod) || this.PPpaymentMethod === 'credit_card';
 		this.PP_libraryUrl = Site.getCurrent().getCustomPreferenceValue('PP_libraryUrl');
-		this.isApplePay = false;
+		this.isApplePay = this.PPpaymentMethod === 'apple_pay';
 	}
 });
 

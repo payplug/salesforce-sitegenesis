@@ -12,12 +12,13 @@
         <div class="payment-method-options form-indent">
             <isloop items="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.options}" var="paymentMethodType">
                 <isset name="isPayPlug" value="${dw.order.PaymentMgr.getPaymentMethod(paymentMethodType.value).getPaymentProcessor().getID() === 'PAYPLUG'}" scope="page" />
+                <isset name="isPayPlugApplePay" value="${dw.order.PaymentMgr.getPaymentMethod(paymentMethodType.value).getCustom()['PP_paymentMethod'].getValue() === 'apple_pay'}" scope="page" />
                 <iscomment>Ignore GIFT_CERTIFICATE method, GCs are handled separately before other payment methods.</iscomment>
                 <isif condition="${paymentMethodType.value.equals(dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE)}">
                     <iscontinue/>
                 </isif>
 
-                <div class="form-row label-inline">
+                <div class="form-row label-inline" data-pp-apple="${isPayPlugApplePay}">
                     <isset name="radioID" value="${paymentMethodType.value}" scope="page" />
                     <div class="field-wrapper">
                         <input id="is-${radioID}" type="radio" class="input-radio" data-pp="${isPayPlug}" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${paymentMethodType.htmlValue}" <isif condition="${paymentMethodType.value == pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlValue}">checked="checked"
@@ -161,10 +162,10 @@
 
 </fieldset>
 <iselse />
-<div class="gift-cert-used form-indent">
+<iscomment> <div class="gift-cert-used form-indent">
     <isif condition="${pdict.gcPITotal > 0}">${Resource.msg('billing.giftcertnomethod', 'checkout', null)}
     <iselse/>${Resource.msg('billing.zerobalance', 'checkout', null)}</isif>
     <input type="hidden" name="${pdict.CurrentForms.billing.paymentMethods.selectedPaymentMethodID.htmlName}" value="${dw.order.PaymentInstrument.METHOD_GIFT_CERTIFICATE}" />
     <input type="hidden" id="noPaymentNeeded" name="noPaymentNeeded" value="true" />
-</div>
+</div> </iscomment>
 </isif>

@@ -19,8 +19,8 @@
                     ${Resource.msg('other.credit.card', 'payplug', null)}
                 <iselse/>
                     <div class="payplugIntegrated" data-pp-is-live="${pdict.isProduction}">
+                        <img src="${URLUtils.staticURL('images/payment-cards.svg')}" alt="Payment Card"/>
                         <form id="my-payment-form">
-                            <div id="scheme"></div>
                             <div id="cardholder-input-container"></div>
                             <div id="pan-input-container"></div>
                             <div id="exp-input-container"></div>

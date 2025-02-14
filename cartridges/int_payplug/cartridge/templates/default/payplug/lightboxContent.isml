@@ -1,4 +1,4 @@
-<isinclude template="util/modules"/>
+<isinclude template="util/modules" />
 
 <isif condition="${customer.isAuthenticated() && pdict.isOneClickEnabled && pdict.isCreditCard}">
     <div class="payplugSavedCard">
@@ -7,7 +7,7 @@
                 <input type="radio"
                     name="dwfrm_billing_payplugCreditCard"
                     value="${wallet.getCreditCardToken()}" />
-                <isminicreditcard card="${wallet}" show_expiration="${true}"/>
+                <isminicreditcard card="${wallet}" show_expiration="${true}" />
             </fieldset>
         </isloop>
         <fieldset class="payment-form-fields">
@@ -19,19 +19,29 @@
                     ${Resource.msg('other.credit.card', 'payplug', null)}
                 <iselse/>
                     <div class="payplugIntegrated" data-pp-is-live="${pdict.isProduction}">
-                        <img src="${URLUtils.staticURL('images/payment-cards.svg')}" alt="Payment Card"/>
                         <form id="my-payment-form">
                             <div id="cardholder-input-container"></div>
+                            <div class="cardtitleimage-container">
+                                <div class="image-title">votre carte</div>
+                                <img src="${URLUtils.staticURL('images/payment-cards.svg')}" alt="Payment Card" />
+                            </div>
                             <div id="pan-input-container"></div>
-                            <div id="exp-input-container"></div>
-                            <div id="cvv-input-container"></div>
+                            <div class="expcvv-container">
+                                <div id="exp-input-container"></div>
+                                <div id="cvv-input-container"></div>
+                            </div>
+                            <div class="secure-by-payplug-container">
+                                <img src="${URLUtils.staticURL('images/lock.svg')}" alt="Payment Card" />
+                                <span>Transaction sécurisée par</span>
+                                <img src="${URLUtils.staticURL('images/logo_payplug.svg')}" alt="Payment Card" />
+                            </div>
                             <div id="save-input-container">
                                 <input type="checkbox" name="pp-integrated-savecard" />
                                 <p>${Resource.msg('payplug.savecard', 'payplug', null)}</p>
                             </div>
-                            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
-                                data-pp-paymentid="${pdict.paymentOptionID}"
-                                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
+                            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', paymentOption.ID)}"
+                                data-pp-paymentid="${paymentOption.ID}"
+                                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', paymentOption.ID)}"
                                 class="payplugIntegratedPayment">Payer</button>
                         </form>
                     </div>
@@ -42,14 +52,28 @@
 <iselseif condition="${pdict.isCreditCard && pdict.PPIntegrationMode === 'integrated'}" />
     <div class="payplugIntegrated">
         <form id="my-payment-form">
-            <div id="scheme"></div>
             <div id="cardholder-input-container"></div>
+            <div class="cardtitleimage-container">
+                <div class="image-title">votre carte</div>
+                <img src="${URLUtils.staticURL('images/payment-cards.svg')}" alt="Payment Card" />
+            </div>
             <div id="pan-input-container"></div>
-            <div id="exp-input-container"></div>
-            <div id="cvv-input-container"></div>
-            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
-                data-pp-paymentid="${pdict.paymentOptionID}"
-                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
+            <div class="expcvv-container">
+                <div id="exp-input-container"></div>
+                <div id="cvv-input-container"></div>
+            </div>
+            <div class="secure-by-payplug-container">
+                <img src="${URLUtils.staticURL('images/lock.svg')}" alt="Payment Card" />
+                <span>Transaction sécurisée par</span>
+                <img src="${URLUtils.staticURL('images/logo_payplug.svg')}" alt="Payment Card" />
+            </div>
+            <div id="save-input-container">
+                <input type="checkbox" name="pp-integrated-savecard" />
+                <p>${Resource.msg('payplug.savecard', 'payplug', null)}</p>
+            </div>
+            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', paymentOption.ID)}"
+                data-pp-paymentid="${paymentOption.ID}"
+                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', paymentOption.ID)}"
                 class="payplugIntegratedPayment">Payer</button>
         </form>
     </div>

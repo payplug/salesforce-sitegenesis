@@ -39,9 +39,9 @@
                                 <input type="checkbox" name="pp-integrated-savecard" />
                                 <p>${Resource.msg('payplug.savecard', 'payplug', null)}</p>
                             </div>
-                            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', paymentOption.ID)}"
-                                data-pp-paymentid="${paymentOption.ID}"
-                                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', paymentOption.ID)}"
+                            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
+                                data-pp-paymentid="${pdict.paymentOptionID}"
+                                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
                                 class="payplugIntegratedPayment">Payer</button>
                         </form>
                     </div>
@@ -71,9 +71,9 @@
                 <input type="checkbox" name="pp-integrated-savecard" />
                 <p>${Resource.msg('payplug.savecard', 'payplug', null)}</p>
             </div>
-            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', paymentOption.ID)}"
-                data-pp-paymentid="${paymentOption.ID}"
-                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', paymentOption.ID)}"
+            <button id="payplugIntegratedPayment" data-pp-url="${URLUtils.https('PayPlug-GetForm', 'paymentMethodID', pdict.paymentOptionID)}"
+                data-pp-paymentid="$pdict.paymentOptionID}"
+                data-pp-validationurl="${URLUtils.https('PayPlug-PlaceOrderLightbox', 'paymentMethodID', pdict.paymentOptionID)}"
                 class="payplugIntegratedPayment">Payer</button>
         </form>
     </div>

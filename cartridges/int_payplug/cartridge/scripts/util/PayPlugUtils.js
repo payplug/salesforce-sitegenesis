@@ -14,6 +14,16 @@ PayPlugUtils.isPaymentMethodPayPlug = function isPaymentMethodPayPlug(paymentMet
 	return (paymentMethod.getPaymentProcessor().getID() === 'PAYPLUG');
 }
 
+PayPlugUtils.getIntegrationMode = function getIntegrationMode(paymentMethod) {
+	const HPPRedirectPM = ['oney', 'bancontact', 'satispay'];
+
+	if (HPPRedirectPM.some(element => paymentMethod.startsWith(element))) {
+		return 'HPP';
+	}
+
+	return Site.getCurrent().getCustomPreferenceValue('PP_integrationMode').getValue();
+}
+
 PayPlugUtils.getPaymentMethodByID = function getPaymentMethodByID(paymentMethodID) {
 	return PaymentMgr.getPaymentMethod(paymentMethodID);
 }
@@ -128,6 +138,8 @@ PayPlugUtils.hasPayPlugPaymentInstrument = function hasPayPlugPaymentInstrument(
 	}
 	return false;
 }
+
+
 
 PayPlugUtils.checkPayPlugPayment = function checkPayPlugPayment() {
 	const PayPlugPaymentModel = require('~/cartridge/models/PayPlugPaymentModel');

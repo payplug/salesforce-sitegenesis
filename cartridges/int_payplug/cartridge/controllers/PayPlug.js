@@ -65,7 +65,7 @@ function notification() {
 function paymentComponent() {
 	const paymentMethod = PaymentMgr.getPaymentMethod(request.getHttpParameterMap().get('paymentMethodID').getStringValue());
 	const ppPaymentMethod = paymentMethod.getCustom()['PP_paymentMethod'].getValue() || 'credit_card';
-	const integrationMode = ppPaymentMethod.indexOf('oney') !== -1 ? 'HPP' : Site.getCurrent().getCustomPreferenceValue('PP_integrationMode').getValue();
+	const integrationMode = PayPlugUtils.getIntegrationMode(ppPaymentMethod);
 
 	if (integrationMode === 'HPP') {
 		app.getView().render('payplug/redirectContent');

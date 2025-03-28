@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	oneyChangePayment();
 
 	$('#pdpMain').on('change', '.pdpForm input[name="Quantity"]', updateSimulation);
+	$(document).on('product:contentUpdated', updateSimulation);
 });
 
 function updateSimulation() {
@@ -13,7 +14,12 @@ function updateSimulation() {
     const priceText = priceElement.textContent.trim();
     const priceNumber = parseFloat(priceText.replace(/[^\d,.-]/g, '').replace(',', '.'));
 
-	const $price = priceNumber * $(this).val();
+
+	if ($(this).val() > 0) {
+		var $price = priceNumber * $(this).val();
+	} else {
+		var $price = priceNumber;
+	}
 	var url = $('.oney-simulation').data('simulation-update') + '?price=' + $price;
 	$.ajax({
 		url: url,

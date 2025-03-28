@@ -1,5 +1,6 @@
 'use strict';
 
+const Site = require('dw/system/Site');
 const Calendar = require('dw/util/Calendar');
 const OrderMgr = require('dw/order/OrderMgr');
 const BasketMgr = require('dw/order/BasketMgr');
@@ -121,9 +122,12 @@ PayPlugUtils.createNotificationCustomObject = function createNotificationCustomO
 	let keyValue = notificationJson.id + "-" + StringUtils.formatCalendar(new Calendar(), "yyyyMMddhhmmss");
 
 	Transaction.wrap(function () {
-		var payplugNotification = CustomObjectMgr.createCustomObject('payplugNotification', keyValue);
-		payplugNotification.getCustom()['payplugLog'] = JSON.stringify(notificationJson, null, 3);
-		payplugNotification.getCustom()['id'] = notificationJson.id;
+		var customObject = CustomObjectMgr.getCustomObject('payplugNotification', keyValue);
+        if (empty(customObject)) {
+            customObject = CustomObjectMgr.createCustomObject('payplugNotification', keyValue);
+        }
+		customObject.getCustom()['payplugLog'] = JSON.stringify(notificationJson, null, 3);
+		customObject.getCustom()['id'] = notificationJson.id;
 	});
 }
 

@@ -95,7 +95,7 @@ function handlePaymentNotification(order, payplugPaymentData) {
 		order.setPaymentStatus(order.PAYMENT_STATUS_PAID);
 		order.getCustom()['payplugPaymentData'] = message;
 		order.getCustom()['pp_pspReference'] = payplugPaymentData.id;
-		order.getCustom()['pp_amount'] = payplugPaymentData.amount;
+		order.getCustom()['pp_amount'] = payplugPaymentData.amount ? payplugPaymentData.amount / 100 : null;
 		order.getCustom()['pp_paymentMethod'] = payplugPaymentData.payment_method ? payplugPaymentData.payment_method.type : 'credit card';
 		order.getCustom()['pp_limitCapture'] = payplugPaymentData.authorization ?
 			StringUtils.formatCalendar(new dw.util.Calendar(new Date((payplugPaymentData.authorization.expires_at * 1000))), request.locale, dw.util.Calendar.LONG_DATE_PATTERN) : 'none';

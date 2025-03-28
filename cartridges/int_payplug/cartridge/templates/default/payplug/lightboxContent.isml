@@ -1,7 +1,7 @@
 <isinclude template="util/modules" />
 
 <isif condition="${customer.isAuthenticated() && pdict.isOneClickEnabled && pdict.isCreditCard}">
-    <div class="payplugSavedCard">
+    <div class="payplugSavedCard ${pdict.hideLightBoxSavedCard ? 'u-Hidden' : ''}">
         <isloop items="${customer.getProfile().getWallet().getPaymentInstruments('PAYPLUG_ONECLICK')}" var="wallet">
             <fieldset class="payment-form-fields">
                 <input type="radio"

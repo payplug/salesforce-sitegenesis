@@ -32,6 +32,8 @@ var PayPlugLightboxView = View.extend({
 		this.isCreditCard = empty(this.PPpaymentMethod) || this.PPpaymentMethod === 'credit_card';
 		this.PP_libraryUrl = Site.getCurrent().getCustomPreferenceValue('PP_libraryUrl');
 		this.isApplePay = this.PPpaymentMethod === 'apple_pay';
+		this.hideLightBoxSavedCard = customer.getProfile().getWallet().getPaymentInstruments('PAYPLUG_ONECLICK').isEmpty() &&
+			(this.PPIntegrationMode === 'lightbox' || this.PPIntegrationMode === 'HPP') && this.isOneClickEnabled;
 	}
 });
 

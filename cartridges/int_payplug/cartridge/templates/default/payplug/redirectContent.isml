@@ -1,1 +1,27 @@
-<div class="payplugRedirect"></div>
+<isinclude template="util/modules" />
+
+<div class="payplugRedirect">
+    <fieldset class="payment-form-fields">
+        <input type="hidden" class="form-control"
+            name="dwfrm_billing_paymentMethod"
+            value="${paymentOption.ID}" />
+    </fieldset>
+    <isif condition="${pdict.isCreditCard && pdict.isOneClickEnabled && customer.isAuthenticated() && !pdict.hideLightBoxSavedCard}">
+        <div class="payplugSavedCard">
+            <isloop items="${customer.getProfile().getWallet().getPaymentInstruments('PAYPLUG_ONECLICK')}" var="wallet">
+                <fieldset class="payment-form-fields">
+                    <input type="radio"
+                        name="dwfrm_billing_payplugCreditCard"
+                        value="${wallet.getCreditCardToken()}" />
+                    <isminicreditcard card="${wallet}" show_expiration="${true}" />
+                </fieldset>
+            </isloop>
+            <fieldset class="payment-form-fields">
+                <input type="radio"
+                    name="dwfrm_billing_payplugCreditCard"
+                    value="" checked />
+                <p>${Resource.msg('other.credit.card', 'payplug', null)}</p>
+            </fieldset>
+        </div>
+    </isif>
+</div>

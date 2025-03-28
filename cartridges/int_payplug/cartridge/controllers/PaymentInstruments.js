@@ -1,6 +1,7 @@
 'use strict';
 
 /* API Modules */
+const URLUtils = require('dw/web/URLUtils');
 const Transaction = require('dw/system/Transaction');
 
 /* Script Modules */

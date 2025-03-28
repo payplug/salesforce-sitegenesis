@@ -68,7 +68,7 @@ function paymentComponent() {
 	const integrationMode = PayPlugUtils.getIntegrationMode(ppPaymentMethod);
 
 	if (integrationMode === 'HPP') {
-		app.getView().render('payplug/redirectContent');
+		app.getView('PayPlugLightbox').render('payplug/redirectContent');
 	} else {
 		app.getView('PayPlugLightbox').render('payplug/lightboxContent');
 	}

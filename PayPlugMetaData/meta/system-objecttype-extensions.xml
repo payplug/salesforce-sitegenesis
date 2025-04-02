@@ -169,10 +169,10 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
-            <attribute-definition attribute-id="PP_differedPayment">
-                <display-name xml:lang="x-default">PayPlug - Deffered Capture</display-name>
-                <display-name xml:lang="fr">PayPlug - Deffered Capture</display-name>
-                <display-name xml:lang="it">PayPlug - Deffered Capture</display-name>
+            <attribute-definition attribute-id="PP_deferredPayment">
+                <display-name xml:lang="x-default">PayPlug - Deferred Capture</display-name>
+                <display-name xml:lang="fr">PayPlug - Deferred Capture</display-name>
+                <display-name xml:lang="it">PayPlug - Deferred Capture</display-name>
                 <description xml:lang="x-default">Option to enable deferred capture of payments.</description>
                 <description xml:lang="fr">Option pour activer la capture différée des paiements.</description>
                 <description xml:lang="it">Opzione per abilitare la cattura differita dei pagamenti.</description>
@@ -297,7 +297,7 @@
             <attribute-group group-id="PayPlug">
                 <display-name xml:lang="x-default">PayPlug</display-name>
                 <attribute attribute-id="PP_secretKey"/>
-                <attribute attribute-id="PP_differedPayment"/>
+                <attribute attribute-id="PP_deferredPayment"/>
                 <attribute attribute-id="PP_libraryUrl"/>
                 <attribute attribute-id="PP_libraryIntegratedUrl"/>
                 <attribute attribute-id="PP_force3DS"/>

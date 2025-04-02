@@ -71,7 +71,7 @@ function PayPlugPaymentRequest(paymentMethod, creditCardID) {
 
 	this.body.amount = Math.round(this.cart.getTotalGrossPrice().getValue() * 100);
 
-	const isDifferedPaymentEnabled = Site.getCurrent().getCustomPreferenceValue('PP_differedPayment');
+	const isDifferedPaymentEnabled = Site.getCurrent().getCustomPreferenceValue('PP_deferredPayment');
 
 	if (ppPaymentMethod !== 'credit_card') {
 		this.body.payment_method = ppPaymentMethod;

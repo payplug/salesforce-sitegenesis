@@ -1,4 +1,4 @@
-# PayPlug Integration Module for SFCC (SFRA)
+# PayPlug Integration Module for SFCC (SiteGenesis)
 
 ## Description
 
@@ -33,7 +33,7 @@ This module integrates **PayPlug** with Salesforce Commerce Cloud (SiteGenesis) 
 ### Prerequisites
 
 1. **Salesforce Commerce Cloud (SFCC)**:
-   - Storefront Reference Architecture (SFRA).
+   - Site Genesis Architecture.
    - Access to the Business Manager.
 
 2. **PayPlug Credentials:**
@@ -76,7 +76,7 @@ This module integrates **PayPlug** with Salesforce Commerce Cloud (SiteGenesis) 
 - **Cartridge Name:** `int_payplug & bm_payplug`
 - **Custom Preferences:**
   - `PP_secretKey` : API key for authentication.
-  - `PP_differedPayment` : Boolean for differed Payment.
+  - `PP_deferedPayment` : Boolean for deferred Payment.
   - `PP_libraryUrl` : URL for payplug library.
   - `PP_libraryIntegratedUrl` : URL for payplug Library Integrated payment.
   - `PP_force3DS` : Boolean for forcing 3DS.
@@ -98,7 +98,7 @@ This module integrates **PayPlug** with Salesforce Commerce Cloud (SiteGenesis) 
 
 ## Compatibility
 
-- **SFRA Versions:** Compatible with SFRA 6.x and above.
+- **Site Genesis Versions:** Compatible with SiteGenesis (SG2).
 - **Environments:** Sandbox and Production.
 - **Supported Browsers:**
   - Chrome, Firefox, Edge, Safari.
